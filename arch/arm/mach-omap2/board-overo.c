@@ -32,6 +32,7 @@
 #include <linux/regulator/machine.h>
 #include <linux/regulator/fixed.h>
 #include <linux/spi/spi.h>
+#include "../../../drivers/staging/iio/adc/ad7192.h"
 
 #include <linux/mtd/mtd.h>
 #include <linux/mtd/nand.h>
@@ -139,6 +140,8 @@ static int __init overo_camera_init(void)
 {
        return omap3_init_camera(&overo_isp_platform_data);
 }
+
+
 
 #else
 static inline void overo_camera_init(void) { return; }
@@ -559,19 +562,45 @@ static int __init overo_i2c_init(void)
 	return 0;
 }
 
+static struct ad7192_platform_data ad7192_pdata = {
+	.vref_mv		= 3300,
+	.clock_source_sel	= 2,
+	.refin2_en		= true,
+	.rej60_en		= false,
+	.sinc3_en		= false,
+	.chop_en		= false,
+	.buf_en			= false,
+	.unipolar_en		= true,
+	.burnout_curr_en	= false,
+};
+
+
 static struct spi_board_info overo_spi_board_info[] __initdata = {
 
-#if !defined(CONFIG_TOUCHSCREEN_ADS7846) && \
-	!defined(CONFIG_TOUCHSCREEN_ADS7846_MODULE) && \
-	(defined(CONFIG_SPI_SPIDEV) || defined(CONFIG_SPI_SPIDEV_MODULE))
+#if defined(CONFIG_AD7192) \
+	|| defined(CONFIG_AD7192_MODULE)
 	{
-		.modalias		= "spidev",
-		.bus_num		= 1,
-		.chip_select		= 0,
-		.max_speed_hz		= 48000000,
-		.mode			= SPI_MODE_0,
+		.modalias = "ad7192",
+		.max_speed_hz = 1000000,     /* max spi clock (SCK) speed in HZ */
+		.bus_num = 1,
+		.chip_select = 0, 
+		.platform_data = &ad7192_pdata,
+		.mode = SPI_MODE_3,
+		.irq = OMAP_GPIO_IRQ(174),
 	},
 #endif
+    
+/* #if !defined(CONFIG_TOUCHSCREEN_ADS7846) && \ */
+/* 	!defined(CONFIG_TOUCHSCREEN_ADS7846_MODULE) && \ */
+/* 	(defined(CONFIG_SPI_SPIDEV) || defined(CONFIG_SPI_SPIDEV_MODULE)) */
+/* 	{ */
+/* 		.modalias		= "spidev", */
+/* 		.bus_num		= 1, */
+/* 		.chip_select		= 0, */
+/* 		.max_speed_hz		= 48000000, */
+/* 		.mode			= SPI_MODE_0, */
+/* 	}, */
+/* #endif */
 /* #if defined(CONFIG_PANEL_LGPHILIPS_LB035Q02) || \ */
 /* 	defined(CONFIG_PANEL_LGPHILIPS_LB035Q02_MODULE) */
 /* 	{ */
