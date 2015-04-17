@@ -572,24 +572,24 @@ static struct spi_board_info overo_spi_board_info[] __initdata = {
 		.mode			= SPI_MODE_0,
 	},
 #endif
-#if defined(CONFIG_PANEL_LGPHILIPS_LB035Q02) || \
-	defined(CONFIG_PANEL_LGPHILIPS_LB035Q02_MODULE)
-	{
-		.modalias		= "lgphilips_lb035q02_panel-spi",
-		.bus_num		= 1,
-		.chip_select		= 1,
-		.max_speed_hz		= 500000,
-		.mode			= SPI_MODE_3,
-	},
-#elif defined(CONFIG_SPI_SPIDEV) || defined(CONFIG_SPI_SPIDEV_MODULE)
-	{
-		.modalias		= "spidev",
-		.bus_num		= 1,
-		.chip_select		= 1,
-		.max_speed_hz		= 48000000,
-		.mode			= SPI_MODE_0,
-	},
-#endif
+/* #if defined(CONFIG_PANEL_LGPHILIPS_LB035Q02) || \ */
+/* 	defined(CONFIG_PANEL_LGPHILIPS_LB035Q02_MODULE) */
+/* 	{ */
+/* 		.modalias		= "lgphilips_lb035q02_panel-spi", */
+/* 		.bus_num		= 1, */
+/* 		.chip_select		= 1, */
+/* 		.max_speed_hz		= 500000, */
+/* 		.mode			= SPI_MODE_3, */
+/* 	}, */
+/* #elif defined(CONFIG_SPI_SPIDEV) || defined(CONFIG_SPI_SPIDEV_MODULE) */
+/* 	{ */
+/* 		.modalias		= "spidev", */
+/* 		.bus_num		= 1, */
+/* 		.chip_select		= 1, */
+/* 		.max_speed_hz		= 48000000, */
+/* 		.mode			= SPI_MODE_0, */
+/* 	}, */
+/* #endif */
 };
 
 static int __init overo_spi_init(void)
