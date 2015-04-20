@@ -110,6 +110,7 @@
 /* ID Register Bit Designations (AD7192_REG_ID) */
 #define ID_AD7190		0x4
 #define ID_AD7192		0x0
+#define ID_AD7193		0x2
 #define ID_AD7195		0x6
 #define AD7192_ID_MASK		0x0F
 
@@ -1131,6 +1132,7 @@ static int ad7192_remove(struct spi_device *spi)
 static const struct spi_device_id ad7192_id[] = {
 	{"ad7190", ID_AD7190},
 	{"ad7192", ID_AD7192},
+	{"ad7193", ID_AD7193},
 	{"ad7195", ID_AD7195},
 	{}
 };
@@ -1148,5 +1150,5 @@ static struct spi_driver ad7192_driver = {
 module_spi_driver(ad7192_driver);
 
 MODULE_AUTHOR("Michael Hennerich <hennerich@blackfin.uclinux.org>");
-MODULE_DESCRIPTION("Analog Devices AD7190, AD7192, AD7195 ADC");
+MODULE_DESCRIPTION("Analog Devices AD7190, AD7192, AD7193, AD7195 ADC");
 MODULE_LICENSE("GPL v2");

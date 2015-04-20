@@ -1,5 +1,5 @@
 /*
- * AD7190 AD7192 AD7195 SPI ADC driver
+ * AD7190 AD7192 AD7193 AD7195 SPI ADC driver
  *
  * Copyright 2011 Analog Devices Inc.
  *
