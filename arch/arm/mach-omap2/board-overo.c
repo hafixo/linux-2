@@ -586,7 +586,7 @@ static struct spi_board_info overo_spi_board_info[] __initdata = {
 		.chip_select = 0, 
 		.platform_data = &ad7192_pdata,
 		.mode = SPI_MODE_3,
-		.irq = OMAP_GPIO_IRQ(174),
+		.irq = -1,
 	},
 #endif
     
@@ -624,6 +624,7 @@ static struct spi_board_info overo_spi_board_info[] __initdata = {
 static int __init overo_spi_init(void)
 {
 	overo_ads7846_init();
+    overo_spi_board_info[0].irq = gpio_to_irq(173); // DOUT/~RDY
 	spi_register_board_info(overo_spi_board_info,
 			ARRAY_SIZE(overo_spi_board_info));
 	return 0;
