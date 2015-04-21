@@ -581,7 +581,7 @@ static struct spi_board_info overo_spi_board_info[] __initdata = {
 	|| defined(CONFIG_AD7192_MODULE)
 	{
 		.modalias = "ad7193",
-		.max_speed_hz = 100000,     /* max spi clock (SCK) speed in HZ */
+		.max_speed_hz = 1000000,     /* max spi clock (SCK) speed in HZ */
 		.bus_num = 1,
 		.chip_select = 0, 
 		.platform_data = &ad7192_pdata,
