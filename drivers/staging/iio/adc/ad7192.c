@@ -24,6 +24,8 @@
 #include <linux/iio/trigger.h>
 #include <linux/iio/trigger_consumer.h>
 
+#include <linux/gpio.h>
+
 #include "ad7192.h"
 
 /* Registers */
@@ -171,6 +173,8 @@ static int __ad7192_write_reg(struct ad7192_state *st, bool locked,
 
 	data[0] = AD7192_COMM_WRITE | AD7192_COMM_ADDR(reg);
 
+    printk("Write register: %d, size: %d, value: 0x%X)\n", reg, size, val);
+    
 	switch (size) {
 	case 3:
 		data[1] = val >> 16;
@@ -220,7 +224,7 @@ static int __ad7192_read_reg(struct ad7192_state *st, bool locked,
 		},
 	};
 	struct spi_message m;
-
+    
 	data[0] = AD7192_COMM_READ | AD7192_COMM_ADDR(reg);
 
 	spi_message_init(&m);
@@ -249,6 +253,8 @@ static int __ad7192_read_reg(struct ad7192_state *st, bool locked,
 		return -EINVAL;
 	}
 
+    printk("Read register: %d, size: %d, value: 0x%X)\n", reg, size, *val);
+    
 	return 0;
 }
 
@@ -359,6 +365,7 @@ static int ad7192_setup(struct ad7192_state *st)
 
 	/* reset the serial interface */
 	memset(&ones, 0xFF, 6);
+    printk("Write six bytes (48 bits) of ones to reset\n");    
 	ret = spi_write(st->spi, &ones, 6);
 	if (ret < 0)
 		goto out;
@@ -374,6 +381,8 @@ static int ad7192_setup(struct ad7192_state *st)
 	if (id != st->devid)
 		dev_warn(&st->spi->dev, "device ID query failed (0x%X)\n", id);
 
+    printk("Device ID is 0x%X)\n", id);    
+    
 	switch (pdata->clock_source_sel) {
 	case AD7192_CLK_EXT_MCLK1_2:
 	case AD7192_CLK_EXT_MCLK2:
@@ -425,14 +434,18 @@ static int ad7192_setup(struct ad7192_state *st)
 	if (pdata->burnout_curr_en)
 		st->conf |= AD7192_CONF_BURN;
 
+    printk("Writing mode: 0x%X\n", st->mode);
+    
 	ret = ad7192_write_reg(st, AD7192_REG_MODE, 3, st->mode);
 	if (ret)
 		goto out;
 
+    printk("Writing conf: 0x%X\n", st->conf);
 	ret = ad7192_write_reg(st, AD7192_REG_CONF, 3, st->conf);
 	if (ret)
 		goto out;
 
+    printk("Running calibrate all\n");
 	ret = ad7192_calibrate_all(st);
 	if (ret)
 		goto out;
@@ -1020,11 +1033,16 @@ static int __devinit ad7192_probe(struct spi_device *spi)
 		return -ENODEV;
 	}
 
+    printk("Given IRQ: %d, expected for GPIO 10: %d", spi->irq, gpio_to_irq(10));
+
+    
 	if (!spi->irq) {
 		dev_err(&spi->dev, "no IRQ?\n");
 		return -ENODEV;
 	}
 
+    
+    
 	indio_dev = iio_device_alloc(sizeof(*st));
 	if (indio_dev == NULL)
 		return -ENOMEM;

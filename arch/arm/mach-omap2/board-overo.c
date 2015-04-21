@@ -580,13 +580,13 @@ static struct spi_board_info overo_spi_board_info[] __initdata = {
 #if defined(CONFIG_AD7192) \
 	|| defined(CONFIG_AD7192_MODULE)
 	{
-		.modalias = "ad7192",
-		.max_speed_hz = 1000000,     /* max spi clock (SCK) speed in HZ */
+		.modalias = "ad7193",
+		.max_speed_hz = 100000,     /* max spi clock (SCK) speed in HZ */
 		.bus_num = 1,
 		.chip_select = 0, 
 		.platform_data = &ad7192_pdata,
 		.mode = SPI_MODE_3,
-		.irq = -1,
+		.irq = -1, /* defined later */
 	},
 #endif
     
@@ -624,7 +624,7 @@ static struct spi_board_info overo_spi_board_info[] __initdata = {
 static int __init overo_spi_init(void)
 {
 	overo_ads7846_init();
-    overo_spi_board_info[0].irq = gpio_to_irq(173); // DOUT/~RDY
+    overo_spi_board_info[0].irq = gpio_to_irq(10); // DOUT/~RDY
 	spi_register_board_info(overo_spi_board_info,
 			ARRAY_SIZE(overo_spi_board_info));
 	return 0;
