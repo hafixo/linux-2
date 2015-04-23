@@ -577,31 +577,29 @@ static struct ad7192_platform_data ad7192_pdata = {
 
 static struct spi_board_info overo_spi_board_info[] __initdata = {
 
-#if defined(CONFIG_AD7192) \
-	|| defined(CONFIG_AD7192_MODULE)
-	{
-		.modalias = "ad7193",
-		.max_speed_hz = 1000000,     /* max spi clock (SCK) speed in HZ */
-		.bus_num = 1,
-		.chip_select = 0, 
-		.platform_data = &ad7192_pdata,
-		.mode = SPI_MODE_3,
-		.irq = -1, /* defined later */
-	},
-#endif
-    
-/* #if !defined(CONFIG_TOUCHSCREEN_ADS7846) && \ */
-/* 	!defined(CONFIG_TOUCHSCREEN_ADS7846_MODULE) && \ */
-/* 	(defined(CONFIG_SPI_SPIDEV) || defined(CONFIG_SPI_SPIDEV_MODULE)) */
+/* #if defined(CONFIG_AD7192) \ */
+/* 	|| defined(CONFIG_AD7192_MODULE) */
 /* 	{ */
-/* 		.modalias		= "spidev", */
-/* 		.bus_num		= 1, */
-/* 		.chip_select		= 0, */
-/* 		.max_speed_hz		= 48000000, */
-/* 		.mode			= SPI_MODE_0, */
+/* 		.modalias = "ad7193", */
+/* 		.max_speed_hz = 10000,     /\* max spi clock (SCK) speed in HZ *\/ */
+/* 		.bus_num = 1, */
+/* 		.chip_select = 0,  */
+/* 		.platform_data = &ad7192_pdata, */
+/* 		.mode = SPI_MODE_3, */
+/* 		.irq = -1, /\* defined later *\/ */
 /* 	}, */
 /* #endif */
-/* #if defined(CONFIG_PANEL_LGPHILIPS_LB035Q02) || \ */
+    
+#if defined(CONFIG_SPI_SPIDEV) || defined(CONFIG_SPI_SPIDEV_MODULE)
+	{
+		.modalias		= "spidev",
+		.bus_num		= 1,
+		.chip_select		= 0,
+		.max_speed_hz		= 48000000,
+		.mode			= SPI_MODE_3,
+	},
+#endif
+/* /\* #if defined(CONFIG_PANEL_LGPHILIPS_LB035Q02) || \ */
 /* 	defined(CONFIG_PANEL_LGPHILIPS_LB035Q02_MODULE) */
 /* 	{ */
 /* 		.modalias		= "lgphilips_lb035q02_panel-spi", */
@@ -619,6 +617,7 @@ static struct spi_board_info overo_spi_board_info[] __initdata = {
 /* 		.mode			= SPI_MODE_0, */
 /* 	}, */
 /* #endif */
+
 };
 
 static int __init overo_spi_init(void)
