@@ -51,6 +51,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
 	i2c-rtc.dtbo \
 	i2c-rtc-gpio.dtbo \
 	i2c-sensor.dtbo \
+	i2c-vc-sensor.dtbo \
 	i2c0-bcm2708.dtbo \
 	i2c1-bcm2708.dtbo \
 	i2s-gpio28-31.dtbo \
