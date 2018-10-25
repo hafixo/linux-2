@@ -210,7 +210,7 @@
 				compatible = "st,lsm303d";
 				reg = <0x1e>;
                                 interrupt-parent = <&gpio>;
-                                interrupts = <26 IRQ_TYPE_EDGE_RISING>;
+                                interrupts = <34 1>;
 			};
 		};
 	};
