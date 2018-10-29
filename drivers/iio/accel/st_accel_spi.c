@@ -59,6 +59,10 @@ static const struct of_device_id st_accel_of_match[] = {
 		.data = LSM330_ACCEL_DEV_NAME,
 	},
 	{
+		.compatible = "st,lsm303d-accel",
+		.data = LSM303D_ACCEL_DEV_NAME,
+	},
+	{
 		.compatible = "st,lsm303agr-accel",
 		.data = LSM303AGR_ACCEL_DEV_NAME,
 	},
@@ -134,6 +138,7 @@ static const struct spi_device_id st_accel_id_table[] = {
 	{ LSM330DLC_ACCEL_DEV_NAME },
 	{ LIS331DLH_ACCEL_DEV_NAME },
 	{ LSM330_ACCEL_DEV_NAME },
+	{ LSM303D_ACCEL_DEV_NAME },
 	{ LSM303AGR_ACCEL_DEV_NAME },
 	{ LIS2DH12_ACCEL_DEV_NAME },
 	{ LIS3L02DQ_ACCEL_DEV_NAME },
