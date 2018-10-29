@@ -211,6 +211,8 @@
 			lsm303d: lsm303d@1e {
 				compatible = "st,lsm303d-accel";
 				reg = <0x1e>;
+                                interrupt-parent = <&gpio>;
+                                interrupts = <34 1>;
 			};
 		};
 	};

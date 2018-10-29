@@ -382,7 +382,7 @@ static const struct st_sensor_settings st_accel_sensors_settings[] = {
 			.mask = ST_SENSORS_DEFAULT_AXIS_MASK,
 		},
 		.fs = {
-			.addr = 0x24,
+			.addr = 0x21,
 			.mask = 0x38,
 			.fs_avl = {
 				[0] = {
@@ -418,22 +418,16 @@ static const struct st_sensor_settings st_accel_sensors_settings[] = {
 		},
 		.drdy_irq = {
 			.int1 = {
-				.addr = 0x23,
-				.mask = 0x80,
+				.addr = 0x22,
+				.mask = 0x04,
 			},
-			.addr_ihl = 0x23,
-			.mask_ihl = 0x40,
 			.stat_drdy = {
 				.addr = ST_SENSORS_DEFAULT_STAT_ADDR,
 				.mask = 0x07,
 			},
-			.ig1 = {
-				.en_addr = 0x23,
-				.en_mask = 0x08,
-			},
 		},
 		.sim = {
-			.addr = 0x24,
+			.addr = 0x21,
 			.value = BIT(0),
 		},
 		.multi_read_bit = false,
